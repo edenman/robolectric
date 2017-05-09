@@ -209,11 +209,13 @@ public final class ShadowAssetManager {
     }
   }
 
-  public void __constructor__() {
+  @Implementation
+  protected void __constructor__() {
     resourceTable = RuntimeEnvironment.getAppResourceTable();
   }
 
-  public void __constructor__(boolean isSystem) {
+  @Implementation
+  protected void __constructor__(boolean isSystem) {
     resourceTable = isSystem ? RuntimeEnvironment.getSystemResourceTable() : RuntimeEnvironment.getAppResourceTable();
   }
 

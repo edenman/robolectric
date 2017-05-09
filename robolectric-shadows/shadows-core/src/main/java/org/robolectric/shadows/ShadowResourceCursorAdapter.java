@@ -15,19 +15,22 @@ public class ShadowResourceCursorAdapter extends ShadowCursorAdapter {
   private int mDropDownLayout;
   private LayoutInflater mInflater;
 
-  public void __constructor__(Context context, int layout, Cursor c) {
+  @Implementation
+  protected void __constructor__(Context context, int layout, Cursor c) {
     super.__constructor__(context, c);
     mLayout = mDropDownLayout = layout;
     mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
-  public void __constructor__(Context context, int layout, Cursor c, boolean autoRequery) {
+  @Implementation
+  protected void __constructor__(Context context, int layout, Cursor c, boolean autoRequery) {
     super.__constructor__(context, c, autoRequery);
     mLayout = mDropDownLayout = layout;
     mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
-  public void __constructor__(Context context, int layout, Cursor c, int flags) {
+  @Implementation
+  protected void __constructor__(Context context, int layout, Cursor c, int flags) {
     super.__constructor__(context, c, flags);
     mLayout = mDropDownLayout = layout;
     mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

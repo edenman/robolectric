@@ -10,7 +10,8 @@ import org.robolectric.annotation.Implements;
 public class ShadowZoomButtonsController {
   private ZoomButtonsController.OnZoomListener listener;
 
-  public void __constructor__(View ownerView) {
+  @Implementation
+  protected void __constructor__(View ownerView) {
   }
 
   @Implementation

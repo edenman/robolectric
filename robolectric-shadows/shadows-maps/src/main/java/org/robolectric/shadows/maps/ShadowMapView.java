@@ -49,7 +49,8 @@ public class ShadowMapView extends ShadowViewGroup {
   private boolean preLoadWasCalled;
   private boolean canCoverCenter = true;
 
-  public void __constructor__(Context context, AttributeSet attributeSet) {
+  @Implementation
+  protected void __constructor__(Context context, AttributeSet attributeSet) {
     setContextOnRealView(context);
     this.attributeSet = attributeSet;
     zoomButtonsController = new ZoomButtonsController(realMapView);
@@ -64,7 +65,9 @@ public class ShadowMapView extends ShadowViewGroup {
         ClassParameter.from(int.class, 0));
   }
 
-  @Override public void __constructor__(Context context, AttributeSet attributeSet, int defStyle) {
+  @Override
+  @Implementation
+  protected void __constructor__(Context context, AttributeSet attributeSet, int defStyle) {
     setContextOnRealView(context);
     this.attributeSet = attributeSet;
     zoomButtonsController = new ZoomButtonsController(realMapView);

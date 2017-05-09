@@ -13,7 +13,8 @@ public class ShadowAsyncTaskLoader<D> {
   @RealObject private AsyncTaskLoader<D> realObject;
   private SimpleFuture<D> future;
 
-  public void __constructor__(Context context) {
+  @Implementation
+  protected void __constructor__(Context context) {
     BackgroundWorker worker = new BackgroundWorker();
     future = new SimpleFuture<D>(worker) {
       @Override

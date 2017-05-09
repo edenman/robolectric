@@ -39,7 +39,8 @@ public class ShadowCamera {
   @RealObject
   private Camera realCamera;
 
-  public void __constructor__() {
+  @Implementation
+  protected void __constructor__() {
     locked = true;
     previewing = false;
     released = false;
@@ -435,7 +436,8 @@ public class ShadowCamera {
   public static class ShadowSize {
     @RealObject private Camera.Size realCameraSize;
 
-    public void __constructor__(Camera camera, int width, int height) {
+    @Implementation
+    protected void __constructor__(Camera camera, int width, int height) {
       realCameraSize.width = width;
       realCameraSize.height = height;
     }

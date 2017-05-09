@@ -53,7 +53,8 @@ public class ShadowCanvas {
     return shadowOf(canvas).getDescription();
   }
 
-  public void __constructor__(Bitmap bitmap) {
+  @Implementation
+  protected void __constructor__(Bitmap bitmap) {
     this.targetBitmap = bitmap;
   }
 

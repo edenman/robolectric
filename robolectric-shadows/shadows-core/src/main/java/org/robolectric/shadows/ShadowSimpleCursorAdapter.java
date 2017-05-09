@@ -58,14 +58,16 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
    *            are given the values of the first N columns in the from
    *            parameter.  Can be null if the cursor is not available yet.
    */
-  public void __constructor__(Context context, int layout, Cursor c, String[] from, int[] to) {
+  @Implementation
+  protected void __constructor__(Context context, int layout, Cursor c, String[] from, int[] to) {
     super.__constructor__(context, layout, c);
     mTo = to;
     mOriginalFrom = from;
     findColumns(from);
   }
 
-  public void __constructor__(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
+  @Implementation
+  protected void __constructor__(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
     this.__constructor__(context, layout, c, from, to);
   }
 

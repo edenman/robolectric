@@ -108,7 +108,8 @@ public class ShadowView {
     return shadowOf(view).innerText();
   }
 
-  public void __constructor__(Context context, AttributeSet attributeSet, int defStyle) {
+  @Implementation
+  protected void __constructor__(Context context, AttributeSet attributeSet, int defStyle) {
     if (context == null) throw new NullPointerException("no context");
     this.attributeSet = attributeSet;
     invokeConstructor(View.class, realView,

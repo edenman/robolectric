@@ -133,8 +133,8 @@ public class ShadowPackageInstaller {
     private boolean outputStreamOpen;
     private IntentSender statusReceiver;
 
-    public void __constructor__() {
-
+    @Implementation
+    protected void __constructor__() {
     }
 
     @Implementation

@@ -36,7 +36,8 @@ public class ShadowAccessibilityEvent extends ShadowAccessibilityRecord {
   @RealObject
   private AccessibilityEvent realAccessibilityEvent;
 
-  public void __constructor__() {
+  @Implementation
+  protected void __constructor__() {
     ReflectionHelpers.setStaticField(AccessibilityEvent.class, "CREATOR", ShadowAccessibilityEvent.CREATOR);
   }
 
