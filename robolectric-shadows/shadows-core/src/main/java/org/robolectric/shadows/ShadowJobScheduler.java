@@ -20,16 +20,16 @@ import static android.os.Build.VERSION_CODES.LOLLIPOP;
 public abstract class ShadowJobScheduler {
 
   @Implementation
-  public abstract int schedule(JobInfo job);
+  protected abstract int schedule(JobInfo job);
 
   @Implementation
-  public abstract void cancel(int jobId);
+  protected abstract void cancel(int jobId);
 
   @Implementation
-  public abstract void cancelAll();
+  protected abstract void cancelAll();
 
   @Implementation
-  public abstract List<JobInfo> getAllPendingJobs();
+  protected abstract List<JobInfo> getAllPendingJobs();
 
   public abstract void failOnJob(int jobId);
 
@@ -40,7 +40,7 @@ public abstract class ShadowJobScheduler {
     private Set<Integer> jobsToFail = new HashSet<>();
 
     @Implementation
-    public int schedule(JobInfo job) {
+    protected int schedule(JobInfo job) {
       if (jobsToFail.contains(job.getId())) {
         return JobScheduler.RESULT_FAILURE;
       }
@@ -50,17 +50,17 @@ public abstract class ShadowJobScheduler {
     }
 
     @Implementation
-    public void cancel(int jobId) {
+    protected void cancel(int jobId) {
       scheduledJobs.remove(jobId);
     }
 
     @Implementation
-    public void cancelAll() {
+    protected void cancelAll() {
       scheduledJobs.clear();
     }
 
     @Implementation
-    public List<JobInfo> getAllPendingJobs() {
+    protected List<JobInfo> getAllPendingJobs() {
       return new ArrayList<>(scheduledJobs.values());
     }
 

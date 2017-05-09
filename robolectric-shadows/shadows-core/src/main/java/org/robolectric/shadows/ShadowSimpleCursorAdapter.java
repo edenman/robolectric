@@ -70,7 +70,7 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
   }
 
   @Implementation
-  public void bindView(View view, Context context, Cursor cursor) {
+  protected void bindView(View view, Context context, Cursor cursor) {
     final ViewBinder binder = mViewBinder;
     final int count = mTo.length;
     final int[] from = mFrom;
@@ -104,17 +104,17 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
   }
 
   @Implementation
-  public ViewBinder getViewBinder() {
+  protected ViewBinder getViewBinder() {
     return mViewBinder;
   }
 
   @Implementation
-  public void setViewBinder(ViewBinder viewBinder) {
+  protected void setViewBinder(ViewBinder viewBinder) {
     mViewBinder = viewBinder;
   }
 
   @Implementation
-  public void setViewImage(ImageView v, String value) {
+  protected void setViewImage(ImageView v, String value) {
     try {
       v.setImageResource(Integer.parseInt(value));
     } catch (NumberFormatException nfe) {
@@ -123,32 +123,32 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
   }
 
   @Implementation
-  public void setViewText(TextView v, String text) {
+  protected void setViewText(TextView v, String text) {
     v.setText(text);
   }
 
   @Implementation
-  public int getStringConversionColumn() {
+  protected int getStringConversionColumn() {
     return mStringConversionColumn;
   }
 
   @Implementation
-  public void setStringConversionColumn(int stringConversionColumn) {
+  protected void setStringConversionColumn(int stringConversionColumn) {
     mStringConversionColumn = stringConversionColumn;
   }
 
   @Implementation
-  public CursorToStringConverter getCursorToStringConverter() {
+  protected CursorToStringConverter getCursorToStringConverter() {
     return mCursorToStringConverter;
   }
 
   @Implementation
-  public void setCursorToStringConverter(CursorToStringConverter cursorToStringConverter) {
+  protected void setCursorToStringConverter(CursorToStringConverter cursorToStringConverter) {
     mCursorToStringConverter = cursorToStringConverter;
   }
 
   @Implementation
-  public CharSequence convertToString(Cursor cursor) {
+  protected CharSequence convertToString(Cursor cursor) {
     if (mCursorToStringConverter != null) {
       return mCursorToStringConverter.convertToString(cursor);
     } else if (mStringConversionColumn > -1) {
@@ -190,7 +190,7 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
   }
 
   @Implementation
-  public Cursor swapCursor(Cursor c) {
+  protected Cursor swapCursor(Cursor c) {
     // super.swapCursor() will notify observers, so make sure we have a mapping before 
     // this happens
       findColumnsFromCursor(c, mOriginalFrom);
@@ -198,13 +198,13 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
   }
 
   @Implementation
-  public void changeCursor(Cursor c) {
+  protected void changeCursor(Cursor c) {
     findColumnsFromCursor(c, mOriginalFrom);
     super.changeCursor(c);
   }
 
   @Implementation
-  public void changeCursorAndColumns(Cursor c, String[] from, int[] to) {
+  protected void changeCursorAndColumns(Cursor c, String[] from, int[] to) {
     mOriginalFrom = from;
     mTo = to;
     realSimpleCursorAdapter.changeCursor(c);
@@ -212,7 +212,7 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
   }
 
   @Implementation
-  public View getView(int position, View convertView, ViewGroup parent) {
+  protected View getView(int position, View convertView, ViewGroup parent) {
     if (!mDataValid) {
       throw new IllegalStateException("this should only be called when the cursor is valid");
     }
@@ -230,7 +230,7 @@ public class ShadowSimpleCursorAdapter extends ShadowResourceCursorAdapter {
   }
 
   @Implementation
-  public View getDropDownView(int position, View convertView, ViewGroup parent) {
+  protected View getDropDownView(int position, View convertView, ViewGroup parent) {
     if (mDataValid) {
       mCursor.moveToPosition(position);
       View v;

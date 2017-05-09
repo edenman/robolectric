@@ -14,7 +14,7 @@ public class ShadowBluetoothDevice {
   }
 
   @Implementation
-  public String getName() {
+  protected String getName() {
     return name;
   }
 }

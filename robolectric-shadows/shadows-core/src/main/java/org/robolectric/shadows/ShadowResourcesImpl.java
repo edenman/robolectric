@@ -74,7 +74,7 @@ public class ShadowResourcesImpl {
   }
 
   @Implementation
-  public static Resources getSystem() {
+  protected static Resources getSystem() {
     if (system == null) {
       AssetManager assetManager = AssetManager.getSystem();
       DisplayMetrics metrics = new DisplayMetrics();
@@ -85,13 +85,13 @@ public class ShadowResourcesImpl {
   }
 
   @Implementation
-  public String getQuantityString(int id, int quantity, Object... formatArgs) throws Resources.NotFoundException {
+  protected String getQuantityString(int id, int quantity, Object... formatArgs) throws Resources.NotFoundException {
     String raw = getQuantityString(id, quantity);
     return String.format(Locale.ENGLISH, raw, formatArgs);
   }
 
   @Implementation
-  public String getQuantityString(int resId, int quantity) throws Resources.NotFoundException {
+  protected String getQuantityString(int resId, int quantity) throws Resources.NotFoundException {
     ShadowAssetManager shadowAssetManager = shadowOf(realResourcesImpl.getAssets());
 
     TypedResource typedResource = shadowAssetManager.getResourceTable().getValue(resId, RuntimeEnvironment.getQualifiers());
@@ -112,7 +112,7 @@ public class ShadowResourcesImpl {
   }
 
   @Implementation
-  public InputStream openRawResource(int id) throws Resources.NotFoundException {
+  protected InputStream openRawResource(int id) throws Resources.NotFoundException {
     ResourceTable resourceTable = shadowOf(realResourcesImpl.getAssets()).getResourceTable();
     InputStream inputStream = resourceTable.getRawValue(id, RuntimeEnvironment.getQualifiers());
     if (inputStream == null) {
@@ -128,7 +128,7 @@ public class ShadowResourcesImpl {
    * be thrown.
    */
   @Implementation
-  public AssetFileDescriptor openRawResourceFd(int id) throws Resources.NotFoundException {
+  protected AssetFileDescriptor openRawResourceFd(int id) throws Resources.NotFoundException {
     InputStream inputStream = openRawResource(id);
     if (!(inputStream instanceof FileInputStream)) {
       // todo fixme
@@ -172,7 +172,7 @@ public class ShadowResourcesImpl {
   }
 
   @Implementation
-  public DisplayMetrics getDisplayMetrics() {
+  protected DisplayMetrics getDisplayMetrics() {
     if (displayMetrics == null) {
       if (display == null) {
         display = ReflectionHelpers.callConstructor(Display.class);
@@ -187,13 +187,13 @@ public class ShadowResourcesImpl {
 
   @HiddenApi
   @Implementation
-  public XmlResourceParser loadXmlResourceParser(int resId, String type) throws Resources.NotFoundException {
+  protected XmlResourceParser loadXmlResourceParser(int resId, String type) throws Resources.NotFoundException {
     ShadowAssetManager shadowAssetManager = shadowOf(realResourcesImpl.getAssets());
     return shadowAssetManager.loadXmlResourceParser(resId, type);
   }
 
   @HiddenApi @Implementation
-  public XmlResourceParser loadXmlResourceParser(String file, int id, int assetCookie, String type) throws Resources.NotFoundException {
+  protected XmlResourceParser loadXmlResourceParser(String file, int id, int assetCookie, String type) throws Resources.NotFoundException {
     return loadXmlResourceParser(id, type);
   }
 
@@ -202,7 +202,7 @@ public class ShadowResourcesImpl {
     @RealObject ResourcesImpl.ThemeImpl realThemeImpl;
 
     @Implementation
-    public TypedArray obtainStyledAttributes(Resources.Theme wrapper, AttributeSet set, int[] attrs, int defStyleAttr, int defStyleRes) {
+    protected TypedArray obtainStyledAttributes(Resources.Theme wrapper, AttributeSet set, int[] attrs, int defStyleAttr, int defStyleRes) {
       Resources resources = wrapper.getResources();
       return shadowOf(resources.getAssets()).attrsToTypedArray(resources, set, attrs, defStyleAttr, getNativePtr(), defStyleRes);
     }
@@ -213,7 +213,7 @@ public class ShadowResourcesImpl {
   }
 
   @Implementation
-  public Drawable loadDrawable(Resources wrapper, TypedValue value, int id, Resources.Theme theme, boolean useCache) throws Resources.NotFoundException {
+  protected Drawable loadDrawable(Resources wrapper, TypedValue value, int id, Resources.Theme theme, boolean useCache) throws Resources.NotFoundException {
     Drawable drawable = directlyOn(realResourcesImpl, ResourcesImpl.class, "loadDrawable",
         from(Resources.class, wrapper),
         from(TypedValue.class, value),

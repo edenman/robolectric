@@ -27,7 +27,7 @@ public class ShadowEnvironment {
   static Path EXTERNAL_FILES_DIR;
 
   @Implementation
-  public static String getExternalStorageState() {
+  protected static String getExternalStorageState() {
     return externalStorageState;
   }
 
@@ -50,13 +50,13 @@ public class ShadowEnvironment {
   }
 
   @Implementation
-  public static File getExternalStorageDirectory() {
+  protected static File getExternalStorageDirectory() {
     if (!exists(EXTERNAL_CACHE_DIR)) EXTERNAL_CACHE_DIR = TempDirectory.create();
     return EXTERNAL_CACHE_DIR.toFile();
   }
 
   @Implementation
-  public static File getExternalStoragePublicDirectory(String type) {
+  protected static File getExternalStoragePublicDirectory(String type) {
     if (!exists(EXTERNAL_FILES_DIR)) EXTERNAL_FILES_DIR = TempDirectory.create();
     if (type == null) return EXTERNAL_FILES_DIR.toFile();
     Path path = EXTERNAL_FILES_DIR.resolve(type);
@@ -87,35 +87,35 @@ public class ShadowEnvironment {
   }
 
   @Implementation
-  public static boolean isExternalStorageRemovable() {
+  protected static boolean isExternalStorageRemovable() {
     final Boolean exists = STORAGE_REMOVABLE.get(getExternalStorageDirectory());
     return exists != null ? exists : false;
   }
 
   @Implementation(minSdk = KITKAT)
-  public static String getStorageState(File path) {
+  protected static String getStorageState(File path) {
     return externalStorageState;
   }
 
   @Implementation(minSdk = LOLLIPOP)
-  public static String getExternalStorageState(File path) {
+  protected static String getExternalStorageState(File path) {
     return externalStorageState;
   }
 
   @Implementation(minSdk = LOLLIPOP)
-  public static boolean isExternalStorageRemovable(File path) {
+  protected static boolean isExternalStorageRemovable(File path) {
     final Boolean exists = STORAGE_REMOVABLE.get(path);
     return exists != null ? exists : false;
   }
 
   @Implementation(minSdk = LOLLIPOP)
-  public static boolean isExternalStorageEmulated(File path) {
+  protected static boolean isExternalStorageEmulated(File path) {
     final Boolean emulated = STORAGE_EMULATED.get(path);
     return emulated != null ? emulated : false;
   }
 
   @Implementation
-  public static boolean isExternalStorageEmulated() {
+  protected static boolean isExternalStorageEmulated() {
     return sIsExternalStorageEmulated;
   }
 

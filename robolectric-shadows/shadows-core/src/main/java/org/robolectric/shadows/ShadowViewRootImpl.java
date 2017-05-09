@@ -9,11 +9,11 @@ import org.robolectric.annotation.Implements;
 public class ShadowViewRootImpl {
 
   @Implementation
-  public static Object getWindowSession(Looper mainLooper) {
+  protected static Object getWindowSession(Looper mainLooper) {
     return null;
   }
 
   @Implementation
-  public void playSoundEffect(int effectId) {
+  protected void playSoundEffect(int effectId) {
   }
 }

@@ -34,22 +34,22 @@ public class ShadowResourceCursorAdapter extends ShadowCursorAdapter {
   }
 
   @Implementation
-  public View newView(Context context, Cursor cursor, ViewGroup parent) {
+  protected View newView(Context context, Cursor cursor, ViewGroup parent) {
     return mInflater.inflate(mLayout, parent, false);
   }
 
   @Implementation
-  public View newDropDownView(Context context, Cursor cursor, ViewGroup parent) {
+  protected View newDropDownView(Context context, Cursor cursor, ViewGroup parent) {
     return mInflater.inflate(mDropDownLayout, parent, false);
   }
 
   @Implementation
-  public void setViewResource(int layout) {
+  protected void setViewResource(int layout) {
     mLayout = layout;
   }
 
   @Implementation
-  public void setDropDownViewResource(int dropDownLayout) {
+  protected void setDropDownViewResource(int dropDownLayout) {
     mDropDownLayout = dropDownLayout;
   }
 }

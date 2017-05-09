@@ -24,27 +24,27 @@ public class ShadowStatFs {
   }
 
   @Implementation
-  public int getBlockSize() {
+  protected int getBlockSize() {
     return BLOCK_SIZE;
   }
 
   @Implementation
-  public int getBlockCount() {
+  protected int getBlockCount() {
     return stat.blockCount;
   }
 
   @Implementation
-  public int getFreeBlocks() {
+  protected int getFreeBlocks() {
     return stat.freeBlocks;
   }
 
   @Implementation
-  public int getAvailableBlocks() {
+  protected int getAvailableBlocks() {
     return stat.availableBlocks;
   }
 
   @Implementation
-  public void restat(String path) {
+  protected void restat(String path) {
     stat = stats.get(path);
     if (stat == null) {
       stat = DEFAULT_STATS;
@@ -52,17 +52,17 @@ public class ShadowStatFs {
   }
 
   @Implementation(minSdk = JELLY_BEAN_MR2)
-  public long getBlockSizeLong() {
+  protected long getBlockSizeLong() {
     return BLOCK_SIZE;
   }
 
   @Implementation(minSdk = JELLY_BEAN_MR2)
-  public long getBlockCountLong() {
+  protected long getBlockCountLong() {
     return stat.blockCount;
   }
 
   @Implementation(minSdk = JELLY_BEAN_MR2)
-  public long getAvailableBlocksLong() {
+  protected long getAvailableBlocksLong() {
     return stat.availableBlocks;
   }
 

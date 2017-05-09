@@ -39,22 +39,22 @@ public class ShadowChoreographer {
   }
 
   @Implementation
-  public static Choreographer getInstance() {
+  protected static Choreographer getInstance() {
     return instance.get();
   }
 
   @Implementation
-  public void postCallbackDelayed(int callbackType, Runnable action, Object token, long delayMillis) {
+  protected void postCallbackDelayed(int callbackType, Runnable action, Object token, long delayMillis) {
     handler.postDelayed(action, delayMillis);
   }
 
   @Implementation
-  public void removeCallbacks(int callbackType, Runnable action, Object token) {
+  protected void removeCallbacks(int callbackType, Runnable action, Object token) {
     handler.removeCallbacks(action, token);
   }
 
   @Implementation
-  public void postFrameCallbackDelayed(final Choreographer.FrameCallback callback, long delayMillis) {
+  protected void postFrameCallbackDelayed(final Choreographer.FrameCallback callback, long delayMillis) {
     handler.postAtTime(new Runnable() {
       @Override public void run() {
         callback.doFrame(getFrameTimeNanos());
@@ -63,12 +63,12 @@ public class ShadowChoreographer {
   }
 
   @Implementation
-  public void removeFrameCallback(Choreographer.FrameCallback callback) {
+  protected void removeFrameCallback(Choreographer.FrameCallback callback) {
     handler.removeCallbacksAndMessages(callback);
   }
 
   @Implementation
-  public long getFrameTimeNanos() {
+  protected long getFrameTimeNanos() {
     final long now = nanoTime;
     nanoTime += ShadowChoreographer.FRAME_INTERVAL;
     return now;

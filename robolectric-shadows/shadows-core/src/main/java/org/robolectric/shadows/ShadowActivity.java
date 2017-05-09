@@ -94,12 +94,12 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public ComponentName getCallingActivity() {
+  protected ComponentName getCallingActivity() {
     return callingActivity;
   }
 
   @Implementation
-  public void setDefaultKeyMode(int keyMode) {
+  protected void setDefaultKeyMode(int keyMode) {
     mDefaultKeyMode = keyMode;
 
     // Some modes use a SpannableStringBuilder to track & dispatch input events
@@ -125,23 +125,23 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public final void setResult(int resultCode) {
+  protected final void setResult(int resultCode) {
     this.resultCode = resultCode;
   }
 
   @Implementation
-  public final void setResult(int resultCode, Intent data) {
+  protected final void setResult(int resultCode, Intent data) {
     this.resultCode = resultCode;
     this.resultIntent = data;
   }
 
   @Implementation
-  public LayoutInflater getLayoutInflater() {
+  protected LayoutInflater getLayoutInflater() {
     return LayoutInflater.from(realActivity);
   }
 
   @Implementation
-  public MenuInflater getMenuInflater() {
+  protected MenuInflater getMenuInflater() {
     return new MenuInflater(realActivity);
   }
 
@@ -153,12 +153,12 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
    * @throws RuntimeException if the {@code contentView} has not been called first
    */
   @Implementation
-  public View findViewById(int id) {
+  protected View findViewById(int id) {
     return getWindow().findViewById(id);
   }
 
   @Implementation
-  public final Activity getParent() {
+  protected final Activity getParent() {
     return parent;
   }
 
@@ -168,22 +168,22 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
    * @param parent Parent fragmentActivity to set on this fragmentActivity
    */
   @HiddenApi @Implementation
-  public void setParent(Activity parent) {
+  protected void setParent(Activity parent) {
     this.parent = parent;
   }
 
   @Implementation
-  public void onBackPressed() {
+  protected void onBackPressed() {
     finish();
   }
 
   @Implementation
-  public void finish() {
+  protected void finish() {
     finishWasCalled = true;
   }
 
   @Implementation(minSdk = LOLLIPOP)
-  public void finishAndRemoveTask() {
+  protected void finishAndRemoveTask() {
     finishWasCalled = true;
   }
 
@@ -195,7 +195,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
    * @return whether {@link #finish()} was called
    */
   @Implementation
-  public boolean isFinishing() {
+  protected boolean isFinishing() {
     return finishWasCalled;
   }
 
@@ -206,7 +206,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
    * @return the window associated with this Activity
    */
   @Implementation
-  public Window getWindow()  {
+  protected Window getWindow()  {
     Window window = directlyOn(realActivity, Activity.class).getWindow();
 
     if (window == null) {
@@ -226,12 +226,12 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public void runOnUiThread(Runnable action) {
+  protected void runOnUiThread(Runnable action) {
     ShadowApplication.getInstance().getForegroundThreadScheduler().post(action);
   }
 
   @Implementation
-  public void setRequestedOrientation(int requestedOrientation) {
+  protected void setRequestedOrientation(int requestedOrientation) {
     if (getParent() != null) {
       getParent().setRequestedOrientation(requestedOrientation);
     } else {
@@ -240,7 +240,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public int getRequestedOrientation() {
+  protected int getRequestedOrientation() {
     if (getParent() != null) {
       return getParent().getRequestedOrientation();
     } else {
@@ -249,7 +249,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public int getTaskId() {
+  protected int getTaskId() {
     return 0;
   }
 
@@ -305,7 +305,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public Object getLastNonConfigurationInstance() {
+  protected Object getLastNonConfigurationInstance() {
     return lastNonConfigurationInstance;
   }
 
@@ -321,7 +321,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public View getCurrentFocus() {
+  protected View getCurrentFocus() {
     return currentFocus;
   }
 
@@ -334,7 +334,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public boolean onCreateOptionsMenu(Menu menu) {
+  protected boolean onCreateOptionsMenu(Menu menu) {
     optionsMenu = menu;
     return directlyOn(realActivity, Activity.class).onCreateOptionsMenu(menu);
   }
@@ -388,21 +388,21 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public void startActivities(Intent[] intents, Bundle options) {
+  protected void startActivities(Intent[] intents, Bundle options) {
     for (int i = intents.length - 1; i >= 0; i--) {
       ShadowApplication.getInstance().startActivity(intents[i], options);
     }
   }
 
   @Implementation
-  public void startActivityForResult(Intent intent, int requestCode) {
+  protected void startActivityForResult(Intent intent, int requestCode) {
     intentRequestCodeMap.put(new Intent.FilterComparison(intent), requestCode);
     startedActivitiesForResults.add(new IntentForResult(intent, requestCode));
     ShadowApplication.getInstance().startActivity(intent);
   }
 
   @Implementation
-  public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+  protected void startActivityForResult(Intent intent, int requestCode, Bundle options) {
     intentRequestCodeMap.put(new Intent.FilterComparison(intent), requestCode);
     startedActivitiesForResults.add(new IntentForResult(intent, requestCode, options));
     ShadowApplication.getInstance().startActivity(intent);
@@ -420,12 +420,12 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public final void showDialog(int id) {
+  protected final void showDialog(int id) {
     showDialog(id, null);
   }
 
   @Implementation
-  public final void dismissDialog(int id) {
+  protected final void dismissDialog(int id) {
     final Dialog dialog = dialogForId.get(id);
     if (dialog == null) {
       throw new IllegalArgumentException();
@@ -435,12 +435,12 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public final void removeDialog(int id) {
+  protected final void removeDialog(int id) {
     dialogForId.remove(id);
   }
 
   @Implementation
-  public final boolean showDialog(int id, Bundle bundle) {
+  protected final boolean showDialog(int id, Bundle bundle) {
     this.lastShownDialogId = id;
     Dialog dialog = dialogForId.get(id);
 
@@ -468,7 +468,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public final boolean isTaskRoot() {
+  protected final boolean isTaskRoot() {
     return mIsTaskRoot;
   }
 
@@ -485,7 +485,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public void overridePendingTransition(int enterAnim, int exitAnim) {
+  protected void overridePendingTransition(int enterAnim, int exitAnim) {
     pendingTransitionEnterAnimResId = enterAnim;
     pendingTransitionExitAnimResId = exitAnim;
   }
@@ -495,7 +495,7 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public void recreate() {
+  protected void recreate() {
     Bundle outState = new Bundle();
     final ActivityInvoker invoker = new ActivityInvoker();
 
@@ -514,12 +514,12 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public void startManagingCursor(Cursor c) {
+  protected void startManagingCursor(Cursor c) {
     managedCursors.add(c);
   }
 
   @Implementation
-  public void stopManagingCursor(Cursor c) {
+  protected void stopManagingCursor(Cursor c) {
     managedCursors.remove(c);
   }
 
@@ -528,27 +528,27 @@ public class ShadowActivity extends ShadowContextThemeWrapper {
   }
 
   @Implementation
-  public final void setVolumeControlStream(int streamType) {
+  protected final void setVolumeControlStream(int streamType) {
     this.streamType = streamType;
   }
 
   @Implementation
-  public final int getVolumeControlStream() {
+  protected final int getVolumeControlStream() {
     return streamType;
   }
 
   @Implementation
-  public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode) {
+  protected void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode) {
     startActivityForResult(intent, requestCode);
   }
 
   @Implementation
-  public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode, Bundle options) {
+  protected void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode, Bundle options) {
     startActivityForResult(intent, requestCode, options);
   }
 
   @Implementation(minSdk = M)
-  public final void requestPermissions(String[] permissions, int requestCode) {
+  protected final void requestPermissions(String[] permissions, int requestCode) {
   }
 
     private final class ActivityInvoker {

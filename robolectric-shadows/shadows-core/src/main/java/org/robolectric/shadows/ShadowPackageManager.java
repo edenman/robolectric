@@ -369,12 +369,12 @@ public class ShadowPackageManager implements RobolectricPackageManager {
   }
 
   @Implementation
-  public List<ResolveInfo> queryBroadcastReceiversAsUser(Intent intent, int flags, UserHandle userHandle) {
+  protected List<ResolveInfo> queryBroadcastReceiversAsUser(Intent intent, int flags, UserHandle userHandle) {
     return getDelegatePackageManager().queryBroadcastReceiversAsUser(intent, flags, userHandle);
   }
 
   @Implementation
-  public List<ResolveInfo> queryBroadcastReceivers(Intent intent, int flags, @UserIdInt int userId) {
+  protected List<ResolveInfo> queryBroadcastReceivers(Intent intent, int flags, @UserIdInt int userId) {
     return getDelegatePackageManager().queryBroadcastReceivers(intent, flags, userId);
   }
 
@@ -384,28 +384,28 @@ public class ShadowPackageManager implements RobolectricPackageManager {
   }
 
   @Implementation
-  public void freeStorageAndNotify(long freeStorageSize, IPackageDataObserver observer) {
+  protected void freeStorageAndNotify(long freeStorageSize, IPackageDataObserver observer) {
     getDelegatePackageManager().freeStorageAndNotify(freeStorageSize, observer);
   }
 
   @Implementation
-  public void freeStorage(long freeStorageSize, IntentSender pi) {
+  protected void freeStorage(long freeStorageSize, IntentSender pi) {
     getDelegatePackageManager().freeStorage(freeStorageSize, pi);
   }
 
   @Implementation
-  public void getPackageSizeInfo(String packageName, IPackageStatsObserver observer) {
+  protected void getPackageSizeInfo(String packageName, IPackageStatsObserver observer) {
     getDelegatePackageManager().getPackageSizeInfo(packageName, observer);
   }
 
   @Implementation
-  public void addPreferredActivityAsUser(IntentFilter filter, int match,
+  protected void addPreferredActivityAsUser(IntentFilter filter, int match,
       ComponentName[] set, ComponentName activity, @UserIdInt int userId) {
     getDelegatePackageManager().addPreferredActivityAsUser(filter, match, set, activity, userId);
   }
 
   @Implementation
-  public void replacePreferredActivityAsUser(IntentFilter filter, int match,
+  protected void replacePreferredActivityAsUser(IntentFilter filter, int match,
       ComponentName[] set, ComponentName activity, @UserIdInt int userId) {
     getDelegatePackageManager().replacePreferredActivityAsUser(filter, match, set, activity, userId);
   }

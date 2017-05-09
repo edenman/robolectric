@@ -44,7 +44,7 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   private List<View> views = new ArrayList<>();
 
   @Implementation
-  public View getView(int position, View convertView, ViewGroup parent) {
+  protected View getView(int position, View convertView, ViewGroup parent) {
     // if the cursor is null OR there are no views to dispense return null
     if (this.mCursor == null || views.size() == 0 ) {
       return null;
@@ -113,12 +113,12 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   }
 
   @Implementation
-  public Cursor getCursor() {
+  protected Cursor getCursor() {
     return mCursor;
   }
 
   @Implementation
-  public int getCount() {
+  protected int getCount() {
     if (mDataValid && mCursor != null) {
       return mCursor.getCount();
     } else {
@@ -127,7 +127,7 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   }
 
   @Implementation
-  public Object getItem(int position) {
+  protected Object getItem(int position) {
     if (mDataValid && mCursor != null) {
       mCursor.moveToPosition(position);
       return mCursor;
@@ -137,7 +137,7 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   }
 
   @Implementation
-  public long getItemId(int position) {
+  protected long getItemId(int position) {
     if (mDataValid && mCursor != null) {
       this.mCursor.getColumnIndexOrThrow("_id");
       if (mCursor.moveToPosition(position)) {
@@ -151,12 +151,12 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   }
 
   @Implementation
-  public boolean hasStableIds() {
+  protected boolean hasStableIds() {
     return true;
   }
 
   @Implementation
-  public Cursor swapCursor(Cursor cursor) {
+  protected Cursor swapCursor(Cursor cursor) {
     if (cursor == mCursor) {
       return null;
     }
@@ -183,7 +183,7 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   }
 
   @Implementation
-  public void changeCursor(Cursor newCursor) {
+  protected void changeCursor(Cursor newCursor) {
     Cursor old = swapCursor(newCursor);
     if (old != null) {
       old.close();
@@ -191,12 +191,12 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   }
 
   @Implementation
-  public CharSequence convertToString(Cursor cursor) {
+  protected CharSequence convertToString(Cursor cursor) {
     return cursor == null ? "" : cursor.toString();
   }
 
   @Implementation
-  public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
+  protected Cursor runQueryOnBackgroundThread(CharSequence constraint) {
     if (mFilterQueryProvider != null) {
       return mFilterQueryProvider.runQuery(constraint);
     }
@@ -205,12 +205,12 @@ public class ShadowCursorAdapter extends ShadowBaseAdapter {
   }
 
   @Implementation
-  public FilterQueryProvider getFilterQueryProvider() {
+  protected FilterQueryProvider getFilterQueryProvider() {
     return mFilterQueryProvider;
   }
 
   @Implementation
-  public void setFilterQueryProvider(FilterQueryProvider filterQueryProvider) {
+  protected void setFilterQueryProvider(FilterQueryProvider filterQueryProvider) {
     mFilterQueryProvider = filterQueryProvider;
   }
 

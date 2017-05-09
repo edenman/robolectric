@@ -14,7 +14,7 @@ public class ShadowZoomButtonsController {
   }
 
   @Implementation
-  public void setOnZoomListener(ZoomButtonsController.OnZoomListener listener) {
+  protected void setOnZoomListener(ZoomButtonsController.OnZoomListener listener) {
     this.listener = listener;
   }
 
