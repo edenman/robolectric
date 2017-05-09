@@ -8,8 +8,8 @@ import org.robolectric.annotation.Implements;
 
 @Implements(MediaRecorder.class)
 public class ShadowMediaRecorder {
-  @SuppressWarnings("UnusedDeclaration")
-  public static void __staticInitializer__() {
+  @Implementation
+  protected static void __staticInitializer__() {
     // don't bind the JNI library
   }
 

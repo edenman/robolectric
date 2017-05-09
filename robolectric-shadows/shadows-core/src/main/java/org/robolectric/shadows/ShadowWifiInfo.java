@@ -10,7 +10,8 @@ import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 @Implements(WifiInfo.class)
 public class ShadowWifiInfo {
-  public static void __staticInitializer__() {
+  @Implementation
+  protected static void __staticInitializer__() {
   }
 
   private String macAddress = "02:00:00:00:00:00"; // WifiInfo.DEFAULT_MAC_ADDRESS (@hide)

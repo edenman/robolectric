@@ -80,7 +80,8 @@ import static org.robolectric.shadows.util.DataSource.toDataSource;
  */
 @Implements(MediaPlayer.class)
 public class ShadowMediaPlayer extends ShadowPlayerBase {
-  public static void __staticInitializer__() {
+  @Implementation
+  protected static void __staticInitializer__() {
     // don't bind the JNI library
   }
 
