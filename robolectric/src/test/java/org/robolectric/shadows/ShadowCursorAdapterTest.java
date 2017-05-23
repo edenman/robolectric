@@ -100,24 +100,6 @@ public class ShadowCursorAdapterTest {
     }
   }
 
-  @Test public void shouldNotRegisterObserversIfNoFlagsAreSet() throws Exception {
-    adapter = new TestAdapterWithFlags(curs, 0);
-    assertThat(Shadows.shadowOf(adapter).mChangeObserver).isNull();
-    assertThat(Shadows.shadowOf(adapter).mDataSetObserver).isNull();
-  }
-
-  @Test public void shouldRegisterObserversWhenRegisterObserverFlagIsSet() throws Exception {
-    adapter = new TestAdapterWithFlags(curs, FLAG_REGISTER_CONTENT_OBSERVER);
-    assertThat(Shadows.shadowOf(adapter).mChangeObserver).isNotNull();
-    assertThat(Shadows.shadowOf(adapter).mDataSetObserver).isNotNull();
-  }
-
-  @Test public void shouldRegisterObserversWhenAutoRequeryFlagIsSet() throws Exception {
-    adapter = new TestAdapterWithFlags(curs, FLAG_AUTO_REQUERY);
-    assertThat(Shadows.shadowOf(adapter).mChangeObserver).isNotNull();
-    assertThat(Shadows.shadowOf(adapter).mDataSetObserver).isNotNull();
-  }
-
   @Test public void shouldNotErrorOnCursorChangeWhenNoFlagsAreSet() throws Exception {
     adapter = new TestAdapterWithFlags(curs, 0);
     adapter.changeCursor(database.rawQuery("SELECT * FROM table_name;", null));
